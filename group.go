@@ -4,6 +4,7 @@ type groupStruct struct {
  groups [][]int
  groupmap map[int]int
  num int
+ messy bool
 }
 
 func New() *groupStruct {
@@ -77,10 +78,14 @@ func (g *groupStruct) Add(a ...int) {
 	}
 	g.groups[grp] = newgroup
 	g.num++
+	g.messy = true
 	return
 }
 
 func (g *groupStruct) Groups() [][]int {
+	if !g.messy {
+		return g.groups
+	}
 	num := len(g.groups)
 	groups := make([][]int, num)
 	var on int
@@ -96,3 +101,42 @@ func (g *groupStruct) Groups() [][]int {
 func (g *groupStruct) Len() int {
 	return g.num
 }
+
+func (g *groupStruct) Of(a int) (int, bool) {
+	if !g.messy {
+		return g.groupmap[a]
+	}
+	grp, ok := g.groupmap[a]
+	if !ok {
+		return -1, false
+	}
+	newgrp := grp
+	for i:=0; i<grp; i++ {
+		if len(g.groups[i]) == 0 {
+			newgrp--
+		}
+	}
+	return newgrp, true
+}
+
+func (g *groupStruct) Optimize() {
+	if !g.messy {
+		return
+	}
+	l := len(g.groups)
+	var on, id int
+	for i:=0; i<l; i++ {
+		if len(g.groups[i]) > 0 {
+			g.groups[on] = g.groups[i]
+			for _, id = range g.groups[on] {
+				g.groupmap[id] = on
+			}
+			on++
+		}
+	}
+	g.groups = g.groups[0:on]
+	g.num = on
+	g.messy = false
+	return
+}
+
