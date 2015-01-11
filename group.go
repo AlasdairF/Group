@@ -30,7 +30,7 @@ func (g *groupStruct) Add(a ...int) {
 	
 	if numgroups == 0 {
 		// Make a new group for all and add all into the new group
-		numgroups = len(groups)
+		numgroups = len(g.groups)
 		g.groups = append(g.groups, a)
 		for _, id = range a {
 			g.groupmap[id] = numgroups
@@ -62,7 +62,7 @@ func (g *groupStruct) Add(a ...int) {
 			g.groups[grp] = make([]int, 0)
 		}
 	}
-	numgroups = len(groups)
+	numgroups = len(g.groups)
 	for _, id = range newgroup {
 		g.groupmap[id] = numgroups
 	}
