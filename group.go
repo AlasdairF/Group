@@ -103,12 +103,12 @@ func (g *groupStruct) Len() int {
 }
 
 func (g *groupStruct) Of(a int) (int, bool) {
-	if !g.messy {
-		return g.groupmap[a]
-	}
 	grp, ok := g.groupmap[a]
 	if !ok {
 		return -1, false
+	}
+	if !g.messy {
+		return grp, ok
 	}
 	newgrp := grp
 	for i:=0; i<grp; i++ {
