@@ -42,8 +42,8 @@ func (g *groupStruct) Add(a ...int) {
 		for i, id = range a {
 			if i != lastgroup {
 				g.groups[grp] = append(g.groups[grp], id)
+				g.groupmap[id] = grp
 			}
-			g.groupmap[id] = grp
 		}
 		return
 	}
@@ -62,11 +62,11 @@ func (g *groupStruct) Add(a ...int) {
 			g.groups[grp] = make([]int, 0)
 		}
 	}
-	numgroups = len(g.groups)
+	grp = thisgroup[lastgroup]
 	for _, id = range newgroup {
-		g.groupmap[id] = numgroups
+		g.groupmap[id] = grp
 	}
-	g.groups = append(g.groups, newgroup)
+	g.groups[grp] = newgroup
 	return
 }
 
