@@ -7,6 +7,7 @@ type groupStruct struct {
  messy bool
 }
 
+// New creates a new group object
 func New() *groupStruct {
 	g := new(groupStruct)
 	g.groupmap = make(map[int]int)
@@ -14,6 +15,7 @@ func New() *groupStruct {
 	return g
 }
 
+// Add IDs to a group
 func (g *groupStruct) Add(a ...int) {
 	
 	if len(a) == 0 {
@@ -82,6 +84,7 @@ func (g *groupStruct) Add(a ...int) {
 	return
 }
 
+// Groups returns all of the groups a slice of int slices
 func (g *groupStruct) Groups() [][]int {
 	if !g.messy {
 		return g.groups
@@ -98,10 +101,12 @@ func (g *groupStruct) Groups() [][]int {
 	return groups[0:on]
 }
 
+// Len returns the total number of active groups
 func (g *groupStruct) Len() int {
 	return g.num
 }
 
+// Of returns the group for any value and whether it exists or not
 func (g *groupStruct) Of(a int) (int, bool) {
 	grp, ok := g.groupmap[a]
 	if !ok {
@@ -119,6 +124,7 @@ func (g *groupStruct) Of(a int) (int, bool) {
 	return newgrp, true
 }
 
+// Optimize removes empty groups which speeds up Of & Groups functions
 func (g *groupStruct) Optimize() {
 	if !g.messy {
 		return
