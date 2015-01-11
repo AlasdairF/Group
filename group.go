@@ -40,7 +40,7 @@ func (g *groupStruct) Add(a ...int) {
 		for _, id = range a {
 			g.groupmap[id] = numgroups
 		}
-		num++
+		g.num++
 		return
 	} else if numgroups == 1 {
 		// Add all to lastgroup
