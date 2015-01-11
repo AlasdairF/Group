@@ -19,7 +19,7 @@ The above will produce the groups:
 
 Create a new group:
 
-     grp := groups.New()
+     grp := group.New()
   
 Add values to the group:
 
